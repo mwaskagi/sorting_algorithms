@@ -25,9 +25,16 @@ void print_array(const int *array, size_t size);
 void insertion_sort_list(listint_t **list);
 void selection_sort(int *array, size_t size);
 void quick_sort(int *array, size_t size);
-void swap_value(int *a, int *b);
-void recursive_sort(int arr[], size_t size, int min, int max);
-int partition(int arr[], size_t size, int low, int high);
 void shell_sort(int *array, size_t size);
+void check_list(const listint_t *list);
+void check_array(const int *array, size_t size);
+int *rand_array(int len, int max);
 
+void cocktail_sort_list(listint_t **list);
+void merge_sort(int *array, size_t size);
+void radix_sort(int *array, size_t size);
+void counting_sort(int *array, size_t size);
+void heap_sort(int *array, size_t size);
+void bitonic_sort(int *array, size_t size);
+void quick_sort_hoare(int *array, size_t size);
 #endif
