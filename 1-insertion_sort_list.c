@@ -1,76 +1,54 @@
 #include "sort.h"
 
 /**
- * insertion_sort_list - is a simple sorting algorithm that builds
- * the final sorted array (or list) one item at a time.
+ * swap - swaps 2 nodes in a doubly-linked list
+ * @a: address of first node
+ * @b: address of second node
  *
- * @list: List of an array of integers.
- *
- * Return: Void Function
+ * Return: void
  */
+void swap(listint_t *a, listint_t *b)
+{
+	if (a->prev)
+		a->prev->next = b;
+	if (b->next)
+		b->next->prev = a;
+	a->next = b->next;
+	b->prev = a->prev;
+	a->prev = b;
+	b->next = a;
 
+}
+
+/**
+ * insertion_sort_list - insertion sorts a doubly-linked list
+ * @list: address of pointer to head node
+ *
+ * Return: void
+ */
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *tmp = *list, *tmp1 = tmp->next;
-	int index = 0, i;
+	listint_t *i, *j;
 
-	if (*list == NULL || list == NULL)
+	if (!list || !*list || !(*list)->next)
 		return;
-	if ((*list)->next == NULL && (*list)->prev == NULL)
-		return;
-	while (tmp1 != NULL)
+	i = (*list)->next;
+	while (i)
 	{
-		if (tmp->n > tmp1->n)
+		j = i;
+		i = i->next;
+		while (j && j->prev)
 		{
-			tmp1->prev = tmp->prev;
-			tmp->next = tmp1->next;
-			tmp->prev = tmp1;
-			tmp1->next = tmp;
-			if (tmp1->prev == NULL)
+			if (j->prev->n > j->n)
 			{
-				if (tmp->next != NULL)
-					tmp->next->prev = tmp;
-				*list = tmp1;
+				swap(j->prev, j);
+				if (!j->prev)
+					*list = j;
+				print_list((const listint_t *)*list);
 			}
-			else if (tmp->next == NULL && tmp1->prev != NULL)
-				tmp1->prev->next = tmp1;
-			else if (tmp1->prev != NULL && tmp->next != NULL)
-			{
-				tmp->next->prev = tmp;
-				tmp1->prev->next = tmp1;
-			}
-			print_list(*list);
-			tmp = tmp1->prev;
-			while (tmp != NULL)
-			{
-				if (tmp->n > tmp1->n)
-				{
-					tmp1->prev = tmp->prev;
-					tmp->next = tmp1->next;
-					tmp->prev = tmp1;
-					tmp1->next = tmp;
-					if (tmp1->prev == NULL)
-					{
-						tmp->next->prev = tmp;
-						*list = tmp1;
-					}
-					else
-					{
-						tmp->next->prev = tmp;
-						tmp1->prev->next = tmp1;
-					}
-					print_list(*list);
-				}
-				tmp1 = tmp;
-				tmp = tmp->prev;
-			}
+			else
+				j = j->prev;
 		}
-		tmp = *list;
-		index += 1;
-		for (i = 0; index > i; i++)
-		{
-			tmp = tmp->next;
-			tmp1 = tmp->next;
-		}
+
 	}
 }
